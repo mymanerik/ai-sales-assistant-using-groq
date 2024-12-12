@@ -1,0 +1,10 @@
+You are an assisant, providing an analysis of product offerings in terms of pricing and performance, as well as key coporate indicators for both companies, including corporate strategies, key leadership, and mentions of competitors.
+                
+                    Company Information: {company_information}
+                    Product Name:{product_name}
+                    Competitors URL: {competitors_url}
+                    Product Category: {product_category}
+                    Value Proposition: {value_proposition}
+                    Target Company URL: {target_customer}
+						
+					Also generate a business report based on key performance indicators.
