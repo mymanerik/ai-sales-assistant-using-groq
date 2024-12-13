@@ -6,77 +6,15 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.tools.tavily_search import TavilySearchResults
 
-# Visualization function
-def create_comparison_chart(data):
-    """Create a bar chart comparing company and competitor metrics."""
-    try:
-        # Check if numeric data exists
-        if not any(data.select_dtypes(include="number").columns):
-            raise ValueError("No numeric data available to plot.")
-
-        fig, ax = plt.subplots(figsize=(10, 6))
-        data.set_index("Metric").plot(kind="bar", ax=ax, legend=True)
-        plt.title("Company vs. Competitor Metrics")
-        plt.ylabel("Values")
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        return fig
-    except Exception as e:
-        return f"Please note: {e}"
-
-# Function to scrape data from a URL
-def scrape_website(url, target="paragraphs"):
-    """Scrapes data from the specified URL."""
-    try:
-        response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        if target == "meta":
-            meta_description = soup.find("meta", attrs={"name": "description"})
-            meta_content = meta_description["content"] if meta_description else "No meta description available"
-            return {"type": "meta", "content": meta_content}
-
-        elif target == "headings":
-            headings = [h.get_text(strip=True) for h in soup.find_all(["h1", "h2", "h3"])[:5]]
-            return {"type": "headings", "content": headings}
-
-        elif target == "paragraphs":
-            paragraphs = [p.get_text(strip=True) for p in soup.find_all("p")[:5]]
-            return {"type": "paragraphs", "content": paragraphs}
-
-        else:
-            return {"error": "Invalid scraping target selected."}
-
-    except Exception as e:
-        return {"error": f"Failed to scrape data: {e}"}
-
-# File upload handling
-def extract_text_from_uploaded_file(uploaded_file):
-    """Extracts text from uploaded PDF or Word files."""
-    try:
-        if uploaded_file.name.endswith(".pdf"):
-            from PyPDF2 import PdfReader
-            pdf_reader = PdfReader(uploaded_file)
-            text = "\n".join([page.extract_text() for page in pdf_reader.pages])
-            return text
-        elif uploaded_file.name.endswith(".docx"):
-            from docx import Document
-            doc = Document(uploaded_file)
-            text = "\n".join([para.text for para in doc.paragraphs])
-            return text
-        else:
-            return "Unsupported file format. Please upload a PDF or Word document."
-    except Exception as e:
-        return f"Error processing file: {e}"
+# Set page configuration
+st.set_page_config(page_title="AISAI: Your AI Powered Sales and Insights Assistant", page_icon="\U0001F310")
 
 # Sidebar for options
-with st.sidebar:
-    st.markdown("### About AISIA")
-    st.markdown(
-        "**AI Sales Insights Assistant (AISIA)** helps sales representatives gain insights into prospective accounts, competitors, and strategies."
-    )
-    st.divider()
+st.sidebar.markdown("### About AISIA")
+st.sidebar.markdown(
+    "AI Sales Insights Assistant (AISIA) is a tool to help sales representatives gain insights into prospective accounts, competitors, and company strategies.",
+)
+st.sidebar.divider()
 
 # Model selection
 st.sidebar.markdown("### Model Comparison")
@@ -140,7 +78,7 @@ Please generate a concise one-page summary with actionable insights for the sale
 
 # Demo data for pre-filling (optional)
 demo_data = {
-    "product_name": "Player Three Prime",
+    "product_name": "https://nzxt.com/product/player-three-prime",
     "company_url": "https://nzxt.com",
     "product_category": "Pre-Built Computer",
     "competitors_url": "https://buildredux.com",
@@ -165,70 +103,54 @@ if uploaded_file:
 # Data collection/inputs
 with st.form("company_info", clear_on_submit=True):
     product_name = st.text_input(
-        "Product Name (What product are you selling?)",
-        value=demo_data["product_name"] if use_demo_data else ""
+        "**Product Name** (What product are you selling?):",
+        value=demo_data["product_name"] if st.session_state.use_demo_data else ""
     )
     company_url = st.text_input(
-        "Company URL (The URL of the company you are targeting)",
-        value=demo_data["company_url"] if use_demo_data else ""
+        "**Company URL** (The URL of the company you are targeting):",
+        value=demo_data["company_url"] if st.session_state.use_demo_data else ""
     )
     product_category = st.text_input(
-        "Product Category (e.g., 'Cloud Data Platform')",
-        value=demo_data["product_category"] if use_demo_data else ""
+        "**Product Category** (e.g., 'Cloud Data Platform'):",
+        value=demo_data["product_category"] if st.session_state.use_demo_data else ""
     )
     competitors_url = st.text_input(
-        "Competitors URL (e.g., www.apple.com)",
-        value=demo_data["competitors_url"] if use_demo_data else ""
+        "**Competitors URL** (e.g., www.apple.com):",
+        value=demo_data["competitors_url"] if st.session_state.use_demo_data else ""
     )
     value_proposition = st.text_input(
-        "Value Proposition (Summarize the appeal of the product)",
-        value=demo_data["value_proposition"] if use_demo_data else ""
+        "**Value Proposition** (Summarize the appeal of the product):",
+        value=demo_data["value_proposition"] if st.session_state.use_demo_data else ""
     )
     target_customer = st.text_input(
-        "Target Customer (Who are you selling to?)",
-        value=demo_data["target_customer"] if use_demo_data else ""
+        "**Target Customer** (Name of the person you are trying to sell to.):",
+        value=demo_data["target_customer"] if st.session_state.use_demo_data else ""
     )
-    uploaded_file = st.file_uploader("Optional: Upload a product overview document (PDF or Word)", type=["pdf", "docx"])
-    include_strategy = st.checkbox("Include Company Strategy", value=True)
-    include_competitors = st.checkbox("Include Competitor Analysis", value=True)
-    include_financial_metrics = st.checkbox("Include Financial Metrics", value=True)
-    include_leadership = st.checkbox("Include Leadership Insights", value=True)
-    submitted = st.form_submit_button("Generate Insights")
 
-# Prepare input for prompt from external file
-# ADD PROMPT HERE
-try:
-    with open("theprompt.txt", "r") as prompt_file:
-        PROMPT_TEMPLATE = prompt_file.read()
-except FileNotFoundError:
-    PROMPT_TEMPLATE = """Error: Prompt file not found. Please ensure 'theprompt.extension' is available in the working directory."""
+    include_strategy = st.checkbox("\U0001F4BC Include Company Strategy", value=True)
+    include_competitors = st.checkbox("\U0001F4CA Include Competitor Analysis", value=True)
+    include_financial_metrics = st.checkbox("\U0001F4B0 Include Financial Metrics", value=True)
+    include_leadership = st.checkbox("\U0001F465 Include Leadership Insights", value=True)
 
-if submitted:
-    with st.spinner("Preparing Report..."):
-        # Scraping logic
-        company_data = scrape_website(company_url)
-        competitor_data = scrape_website(competitors_url)
+    if st.form_submit_button("Generate Insights"):
+        with st.spinner("Processing..."):
+            # Fetch company information
+            company_information = search.invoke(company_url)
 
-        # Handle uploaded file
-        uploaded_text = None
-        if uploaded_file:
-            uploaded_text = extract_text_from_uploaded_file(uploaded_file)
+            # Prompt Template
+            prompt_template = ChatPromptTemplate([("system", PROMPT_TEMPLATE)])
 
-        # Prepare input payload
-        input_payload = {
-            "company_information": company_data.get("content", ""),
-            "competitor_information": competitor_data.get("content", ""),
-            "product_name": product_name,
-            "product_category": product_category,
-            "value_proposition": value_proposition,
-            "target_customer": target_customer,
-            "include_financial_metrics": include_financial_metrics,
-            "uploaded_file": uploaded_text,
-            "additional_insights": "N/A",  # Default value if not available
-            "competitors_url": competitors_url,
-            "data_source_url": company_url,
-            "ecommerce site name": "N/A"  # Default value
-        }
+            # Create input payload
+            input_payload = {
+                "company_information": company_information,
+                "product_name": product_name,
+                "competitors_url": competitors_url,
+                "product_category": product_category,
+                "value_proposition": value_proposition,
+                "target_customer": target_customer,
+                "include_financial_metrics": include_financial_metrics,
+                "additional_insights": additional_insights
+            }
 
             # Generate insights
             chain = prompt_template | llm | parser
