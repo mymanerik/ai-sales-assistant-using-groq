@@ -1,4 +1,4 @@
-#AISAI: Your AI Powered Sales and Insights Assistant | v27
+#AISAI: Your AI Powered Sales and Insights Assistant | v26
 
 import streamlit as st
 from langchain_groq import ChatGroq
@@ -20,22 +20,8 @@ st.sidebar.divider()
 st.sidebar.markdown("### Model Comparison")
 selected_model = st.sidebar.selectbox(
     "Select a Language Model",
-    options=[
-        "Groq Model A", 
-        "Groq Model B", 
-        "Groq Model C", 
-        "ChatGPT-4o-Latest (coming soon)", 
-        "Gemini-EXP-1206 (coming soon)", 
-        "Llama (coming soon)", 
-        "StabilityAI (coming soon)", 
-        "Yi-Lightning (coming soon)"
-    ]
+    options=["Groq Model A", "Groq Model B", "Groq Model C"]
 )
-
-if "(coming soon)" in selected_model:
-    st.title(f"AI Sales Insights Assistant: {selected_model}")
-else:
-    st.title(f"AI Sales Insights Assistant: {selected_model}")
 
 # Temperature slider for selected Groq model
 st.sidebar.markdown("### Model Temperature")
@@ -55,6 +41,7 @@ st.sidebar.markdown("<h4>Erik Malson</h4>", unsafe_allow_html=True)
 st.sidebar.markdown("<span style='font-size:12px;'>[GitHub](https://github.com/mymanerik) | [LinkedIn](https://www.linkedin.com/in/erikmalson) | [Resume](https://docs.google.com/document/d/1GxGBTHxJAxRu9_t98PeaH9Jk-ogLInSCU85Ub9gnjiY/edit?usp=sharing) | [YouTube](https://www.youtube.com/@AIInTheAM)</span>", unsafe_allow_html=True)
 
 # Title and description for the main panel
+st.title(f"AI Sales Insights Assistant: {selected_model}")
 st.markdown(
     """
     Please fill out the form below, use our demo data or upload a document for insights
@@ -91,27 +78,17 @@ Please generate a concise one-page summary with actionable insights for the sale
 
 # Demo data for pre-filling (optional)
 demo_data = {
-    "product_name": "https://nzxt.com/product/player-three-prime",
+    "product_name": "Dual RTX 4090 128GB 8TB NVME M.2 PC",
     "company_url": "https://nzxt.com",
     "product_category": "Pre-Built Computer",
     "competitors_url": "https://buildredux.com",
     "value_proposition": "High-end PC for advanced AI, Data Modeling and Video Rendering",
-    "target_customer": "High end gamers and AI and ML Developers & Engineers"
+    "target_customer": "Nerds"
 }
 
 # Toggle for demo data
 if "use_demo_data" not in st.session_state:
     st.session_state.use_demo_data = False
-
-# Demo data and clear form buttons
-col1, col2 = st.columns([0.5, 0.5])
-with col1:
-    if st.button("Use demo data"):
-        st.session_state.use_demo_data = True
-with col2:
-    if st.button("Clear form data", key="clear_form_data_1"):
-        st.session_state.use_demo_data = False
-
 
 # File upload for additional insights
 uploaded_file = st.file_uploader("Optional: Upload a product overview document (PDF or Word).", type=["pdf", "docx"])
@@ -152,41 +129,48 @@ with st.form("company_info", clear_on_submit=True):
     include_financial_metrics = st.checkbox("\U0001F4B0 Include Financial Metrics", value=True)
     include_leadership = st.checkbox("\U0001F465 Include Leadership Insights", value=True)
 
-    if st.form_submit_button("Generate Insights"):
-        with st.spinner("Processing..."):
-            # Fetch company information
-            company_information = search.invoke(company_url)
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        if st.form_submit_button("Generate Insights"):
+            with st.spinner("Processing..."):
+                # Fetch company information
+                company_information = search.invoke(company_url)
 
-            # Prompt Template
-            prompt_template = ChatPromptTemplate([("system", PROMPT_TEMPLATE)])
+                # Prompt Template
+                prompt_template = ChatPromptTemplate([("system", PROMPT_TEMPLATE)])
 
-            # Create input payload
-            input_payload = {
-                "company_information": company_information,
-                "product_name": product_name,
-                "competitors_url": competitors_url,
-                "product_category": product_category,
-                "value_proposition": value_proposition,
-                "target_customer": target_customer,
-                "include_financial_metrics": include_financial_metrics,
-                "additional_insights": additional_insights
-            }
+                # Create input payload
+                input_payload = {
+                    "company_information": company_information,
+                    "product_name": product_name,
+                    "competitors_url": competitors_url,
+                    "product_category": product_category,
+                    "value_proposition": value_proposition,
+                    "target_customer": target_customer,
+                    "include_financial_metrics": include_financial_metrics,
+                    "additional_insights": additional_insights
+                }
 
-            # Generate insights
-            chain = prompt_template | llm | parser
-            company_insights = chain.invoke(input_payload)
+                # Generate insights
+                chain = prompt_template | llm | parser
+                company_insights = chain.invoke(input_payload)
 
-                        # Output formatting based on type
-            st.markdown("## Sales Insights Report", unsafe_allow_html=True)
+                # Debugging output type
+                st.write(f"Type of company_insights: {type(company_insights)}")
+                
+                # Output formatting based on type
+                st.markdown("## Sales Insights Report", unsafe_allow_html=True)
 
-            if isinstance(company_insights, str):
-                import html
-                st.markdown("### Insights Report")
-                safe_content = html.escape(company_insights).replace('\n', '  \n')
-                st.markdown(safe_content, unsafe_allow_html=True)
-            elif isinstance(company_insights, dict):
-                st.json(company_insights)  # Display as JSON
-            else:
-                st.write("Unexpected output format for company_insights:")
-                st.write(company_insights)
-
+                if isinstance(company_insights, str):
+                    import html
+                    st.markdown("### Insights Report")
+                    safe_content = html.escape(company_insights).replace('\n', '  \n')
+                    st.markdown(safe_content, unsafe_allow_html=True)
+                elif isinstance(company_insights, dict):
+                    st.json(company_insights)  # Display as JSON
+                else:
+                    st.write("Unexpected output format for company_insights:")
+                    st.write(company_insights)
+    with col2:
+        if st.button("Clear form data"):
+            st.session_state.use_demo_data = False
