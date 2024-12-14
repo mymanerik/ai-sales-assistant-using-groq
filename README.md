@@ -11,6 +11,16 @@ This app has three purposes:
 - Thanks and enjoy!
 - E
 
-# About Me
+# Certifications / Education
 - BBA, Howard University | IT Systems Analysis and Design
-- A+ Certified (2024-03-15) | AWS Certified Cloud Practitioner (2024-07-08) | AWS Certified AI Practitioner (2024-12-21)
+- Per Scholas | Comp TIA A+ Certified, March 2024
+- AWS Certified Cloud Practitioner, July 2024
+- AWS Certified AI Practitioner, December 2024
+- Zero to Mastery Python Bootcamp, December 2024
+- Zero to Mastery Prompt Engineering Bootcamp, December 2024
+- Per Scholas AI Prompt Engineering, December 2024
+
+#Contact
+https://linkedin.com/in/erikmalson
+https://www.erik.ml
+https://github.com/mymanerik
