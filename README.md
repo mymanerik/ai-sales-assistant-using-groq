@@ -1,7 +1,5 @@
 # Welcome to the AI Sales Agent Using Groq!
-This is the apps GitHub and you can find the app deployed at
-
-https://ai-sales-assistant-using-groq.streamlit.app
+This is the apps GitHub and you can find its deployment by clicking here: [AI Sales Agent w Groq](https://ai-sales-assistant-using-groq.streamlit.app)
 
 This app has three purposes:
 
