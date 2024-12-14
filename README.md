@@ -20,7 +20,5 @@ This app has three purposes:
 - Zero to Mastery Prompt Engineering Bootcamp, December 2024
 - Per Scholas AI Prompt Engineering, December 2024
 
-#Contact
-https://linkedin.com/in/erikmalson
-https://www.erik.ml
-https://github.com/mymanerik
+# Contact
+https://linkedin.com/in/erikmalson | https://www.erik.ml | https://github.com/mymanerik
