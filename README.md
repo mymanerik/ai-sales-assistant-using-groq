@@ -12,6 +12,5 @@ This app has three purposes:
 - E
 
 # About Me
-- A+ Certified (March, 2024)
-- AWS Certified Cloud Practitioner (July, 2024)
-- AWS Certified AI Practitioner (pending December 2024)
+BBA, Howard University | IT Systems Analysis and Design
+A+ Certified (March, 2024) | AWS Certified Cloud Practitioner (July, 2024) | AWS Certified AI Practitioner (pend December 2024)
