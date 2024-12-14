@@ -8,7 +8,6 @@ This app has three purposes:
 - To be future ready, as you can see the app has placeholders for adding additional LLMs over time
 - To be user friendly and convenient, allowing you to input demo data instead of having to completely fill out the form if you wish. analysis intake form if you wish. However, if you wish to fill out your own data, feel free to do so! This app is also "Rag Ready" as you can upload files to be analyzed by the LLM as well!
 - Thanks and enjoy!
-- E
 
 # Certifications / Education
 - [BBA, Howard University | IT Systems Analysis and Design](https://business.howard.edu/programs/undergraduate/computer-information-systems)
