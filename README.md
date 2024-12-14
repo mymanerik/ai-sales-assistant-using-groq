@@ -21,8 +21,8 @@ This app has three purposes:
 - Per Scholas AI Prompt Engineering, December 2024
 
 # Contact
--🌐[www.Erik.ml](https://www.erik.ml)
--[GitHub](https://github.com/mymanerik)
--[LinkedIn](https://linkedin.com/in/erikmalson)
--<a href="https://docs.google.com/document/d/1GxGBTHxJAxRu9_t98PeaH9Jk-ogLInSCU85Ub9gnjiY/edit?usp=sharing">Resume</a>
--[YouTube](https://YouTube.com/@AIinTheAM)
+- [www.Erik.ml](https://www.erik.ml)
+- [GitHub](https://github.com/mymanerik)
+- [LinkedIn](https://linkedin.com/in/erikmalson)
+- <a href="https://docs.google.com/document/d/1GxGBTHxJAxRu9_t98PeaH9Jk-ogLInSCU85Ub9gnjiY/edit?usp=sharing">Resume</a>
+- [YouTube](https://YouTube.com/@AIinTheAM)
