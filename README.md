@@ -21,4 +21,4 @@ This app has three purposes:
 - Per Scholas AI Prompt Engineering, December 2024
 
 # Contact
-https://linkedin.com/in/erikmalson | https://www.erik.ml | https://github.com/mymanerik
+🌐https://www.erik.ml | 📄https://linkedin.com/in/erikmalson | 😺https://github.com/mymanerik
