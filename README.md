@@ -15,9 +15,9 @@ This app has three purposes:
 - [Per Scholas | Comp TIA A+ Certified](https://perscholas.org/courses/desktop-support), March 2024
 - [AWS Certified Cloud Practitioner](https://aws.amazon.com/certification/certified-cloud-practitioner), July 2024
 - [AWS Certified AI Practitioner](https://aws.amazon.com/certification/certified-ai-practitioner), December 2024
+- [Per Scholas AI Prompt Engineering](https://alumni.perscholas.org/courses/ai-prompt-engineering), December 2024
 - [Zero to Mastery Complete Python Developer (Bootcamp)](https://zerotomastery.io/courses/learn-python/), December 2024
 - [Zero to Mastery Prompt Engineering Bootcamp](https://zerotomastery.io/courses/prompt-engineering-bootcamp/), December 2024
-- [Per Scholas AI Prompt Engineering](https://alumni.perscholas.org/courses/ai-prompt-engineering), December 2024
 
 # Contact
 - [GitHub](https://github.com/mymanerik)
