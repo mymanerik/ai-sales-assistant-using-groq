@@ -9,7 +9,7 @@ This app has three purposes:
 - To be user friendly and convenient, allowing you to input demo data instead of having to completely fill out the form if you wish. analysis intake form if you wish. However, if you wish to fill out your own data, feel free to do so! This app is also "Rag Ready" as you can upload files to be analyzed by the LLM as well!
 - Thanks and enjoy!
 
-# Certifications / Education
+# About The Erik | Certifications / Education
 - [BBA, Howard University | IT Systems Analysis and Design](https://business.howard.edu/programs/undergraduate/computer-information-systems)
 - [Per Scholas | Comp TIA A+ Certified](https://perscholas.org/courses/desktop-support), March 2024
 - [AWS Certified Cloud Practitioner](https://aws.amazon.com/certification/certified-cloud-practitioner), July 2024
@@ -18,7 +18,7 @@ This app has three purposes:
 - [Zero to Mastery Complete Python Developer (Bootcamp)](https://zerotomastery.io/courses/learn-python/), December 2024
 - [Zero to Mastery Prompt Engineering Bootcamp](https://zerotomastery.io/courses/prompt-engineering-bootcamp/), December 2024
 
-# Contact
+# About The Erik | Contact
 - [GitHub](https://github.com/mymanerik)
 - [LinkedIn](https://linkedin.com/in/erikmalson)
 - <a href="https://docs.google.com/document/d/1GxGBTHxJAxRu9_t98PeaH9Jk-ogLInSCU85Ub9gnjiY/edit?usp=sharing">Resume</a>
